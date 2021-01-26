@@ -3,7 +3,9 @@ package com.example.serviciosrestapi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> titles = new ArrayList<>();
     private ArrayList<String> id = new ArrayList<>();
     private ArrayAdapter arrayAdapter;
+    EditText filtarID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +35,22 @@ public class MainActivity extends AppCompatActivity {
         list = findViewById(R.id.list);
 
         list.setAdapter(arrayAdapter);
+
+        filtarID =(EditText)findViewById(R.id.editTextFiltrar);
         getPosts();
+    }
+    public void onClickFiltrar(View view){
+        String aux=filtarID.getText().toString();
+        if(aux.equals("")){
+            getPosts();
+        } else {
+            getOnePost(Integer.parseInt(aux));
+        }
+
     }
 
     private void getPosts() {
-
+        titles.clear();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(" https://jsonplaceholder.typicode.com")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -61,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getOnePost(int id){
+        titles.clear();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://jsonplaceholder.typicode.com")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -70,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
+
                 titles.add(response.body().getTitle());
                 arrayAdapter.notifyDataSetChanged();
             }

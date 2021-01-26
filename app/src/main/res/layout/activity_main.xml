@@ -5,11 +5,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    >
+
+
+
+    <EditText
+        android:id="@+id/editTextFiltrar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Filtrar por id"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickFiltrar"
+        android:text="Filtrar" />
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="334dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" />
     </LinearLayout>
 
